@@ -5,31 +5,53 @@ import string
 class PasswordGenerator:
     """Was created class for object Password Generator"""
 
-    def __init__(self, length, include_uppercase, include_lowercase, include_digits, include_special_chars):
+    def __init__(self, length=8, include_uppercase=True , include_lowercase=True, include_digits=True, include_special_chars=True):
+
         '''Method init with some conditions for object Password Generator'''
-        self.length = length #default: 8
-        self.include_uppercase = include_uppercase #default: True
-        self.include_lowercase = include_lowercase #default: True
-        self.include_digits = include_digits #default: True
-        self.include_special_chars = include_special_chars #default: True
+        self.length = length
+        self.include_uppercase = include_uppercase
+        self.include_lowercase = include_lowercase
+        self.include_digits = include_digits
+        self.include_special_chars = include_special_chars
 
     def generator(self):
+        # The different character sets from which to generate the password
+        uppercase_letters = string.ascii_uppercase if self.include_uppercase else ''
+        lowercase_letters = string.ascii_lowercase if self.include_lowercase else ''
+        digits = string.digits if self.include_digits else ''
+        special_chars = string.punctuation if self.include_special_chars else ''
 
-        uppercase_letters = string.ascii_uppercase
-        lowercase_letters = string.ascii_lowercase
-        symbols = string.punctuation
-        digits = string.digits
-        password=[]
+        # The combined character set
+        all_chars = uppercase_letters + lowercase_letters + digits + special_chars
+
+        # Generate a random password of the specified length
+        password = ''.join(random.choice(all_chars) for _ in range(self.length))
+
+        return password
+
+def get_input_parameter(prompt):
+    response = input(prompt)
+    if response.lower() in ['yes', 'no']:
+        return response.lower() == 'yes'
+    else:
+        print("Please enter 'yes' or 'no' !!!")
+        return get_input_parameter(prompt)
 
 
-        if self.include_uppercase and self.include_lowercase and self.include_digits and self.include_special_chars :
-            all_ch = uppercase_letters + lowercase_letters + symbols + digits
-            password = [random.choice(uppercase_letters), random.choice(lowercase_letters), random.choice(symbols), random.choice(digits)]
-            password += random.sample(all_ch, self.length - len(password))
+# Get the password length from the user, using a default value if no input is given
+while True:
+    try:
+        length_input = input("Enter the desired password length (default: 8): ")
+        length = int(length_input) if length_input else 8
+        break
+    except ValueError:
+        print("Invalid input. Please enter an integer number.")
 
-        random.shuffle(password)
-        return ''.join(password)
+include_uppercase = get_input_parameter("Include uppercase letters (yes/no): ")
+include_lowercase = get_input_parameter("Include lowercase letters (yes/no): ")
+include_digits = get_input_parameter("Include digits (yes/no): ")
+include_special_chars = get_input_parameter("Include special symbols (yes/no): ")
 
 
-your_password = PasswordGenerator(8, True, True, True, True)
+your_password = PasswordGenerator(length, include_uppercase, include_lowercase, include_digits, include_special_chars)
 print(f"Your password: {your_password.generator()}")
