@@ -19,14 +19,17 @@ class PasswordGenerator:
         lowercase_letters = string.ascii_lowercase
         symbols = string.punctuation
         digits = string.digits
-        your_password = ''
+        password=[]
 
-        if self.include_uppercase is True and self.include_lowercase is True and self.include_digits is True and self.include_special_chars is True:
-            for item in range(self.length):
-                your_password += random.choice(uppercase_letters + lowercase_letters + symbols + digits)
 
-        print(your_password)
+        if self.include_uppercase and self.include_lowercase and self.include_digits and self.include_special_chars :
+            all_ch = uppercase_letters + lowercase_letters + symbols + digits
+            password = [random.choice(uppercase_letters), random.choice(lowercase_letters), random.choice(symbols), random.choice(digits)]
+            password += random.sample(all_ch, self.length - len(password))
+
+        random.shuffle(password)
+        return ''.join(password)
 
 
 your_password = PasswordGenerator(8, True, True, True, True)
-your_password.generator()
+print(f"Your password: {your_password.generator()}")
