@@ -3,22 +3,6 @@ import string
 
 
 class PasswordGenerator:
-    """Was created class for object Password Generator"""
-
-    def __init__(self, length=8, include_uppercase=True, include_lowercase=True, include_digits=True,
-                 include_special_chars=True):
-        """Method init with some conditions for object Password Generator"""
-        self.length = length
-        self.include_uppercase = include_uppercase
-        self.include_lowercase = include_lowercase
-        self.include_digits = include_digits
-        self.include_special_chars = include_special_chars
-
-    import random
-import string
-
-
-class PasswordGenerator:
     """
     Was created class for object Password Generator based on task.
 
